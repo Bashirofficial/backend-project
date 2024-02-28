@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, logoutUser, registerUser } from "../controllers/user.controllers.js";
+import { loginUser, logoutUser, refreshAccessToken, registerUser } from "../controllers/user.controllers.js";
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = Router()
@@ -25,5 +25,8 @@ router.route("/login").post(loginUser)
 router.route("/logout").post(verifyJWT, logoutUser) //For this reaseon we write next() same in 
                                       //auth.middleware.js we have written next() so another 
                                       //middleware in .post( , , ) could execute
+
+ router.route("/refresh-token").post(refreshAccessToken) //already putted in try and catch so we 
+                                                        //are not usign verifyJwt middleware
 
 export default router

@@ -8,7 +8,7 @@ const asyncHandler = (requestHandler) => {
 
 
 
-export {asyncHandler}
+export { asyncHandler }
 
 
 // for try catch

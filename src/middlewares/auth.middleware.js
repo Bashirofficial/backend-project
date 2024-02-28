@@ -1,12 +1,13 @@
 //To verify if user is there or not 
 
-import { ApiError } from "../utils/ApiError";
-import { asyncHandler } from "../utils/asyncHandler";
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.models.js";
 
 
-export const verifyJWT = asyncHandler(async(req, res, next) =>{ //here res is no been used so we 
+
+export const verifyJWT = asyncHandler(async (req, _, next) =>{ //here res is no been used so we 
                                                                 //can write "_" insted of res
    try {
     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
@@ -20,6 +21,7 @@ export const verifyJWT = asyncHandler(async(req, res, next) =>{ //here res is no
     const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
  
     if (!user) {
+          
          throw new ApiError(401, "Invalid Access Token")
     }
     req.user = user;
