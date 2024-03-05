@@ -91,7 +91,9 @@ const registerUser = asyncHandler( async (req, res) => {
           throw new ApiError(500, "Something went wrong while registering the user")
      }
 
-     return res.status(201).json(
+     return res
+     .status(201)
+     .json(
           new ApiResponse(200, createdUser, "User registered Successfully")
       )
 })
@@ -192,7 +194,7 @@ const refreshAccessToken = asyncHandler( async(req, res) => {
                throw new ApiError(401, "Invalid refresh token")
           }
      
-          if (incomingRefreshToken !== user?.refreshToken) {     //refreshToken is in userschema in user.model.js
+          if (incomingRefreshToken !== user?.refreshToken) {  //refreshToken is in userschema in user.model.js
                throw new ApiError(401, "Refresh token is expired or used")
           }
      
@@ -206,7 +208,7 @@ const refreshAccessToken = asyncHandler( async(req, res) => {
           return res
           .status(200)
           .cookie("accessToken", accessToken, options)
-          .cookie("refreshToken", refreshToken, options)
+          .cookie("refreshToken", newrefreshToken, options)
           .json(
                     new ApiResponse(200,
                          {accessToken, refreshToken: newrefreshToken},
